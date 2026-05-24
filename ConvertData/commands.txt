@@ -1,0 +1,75 @@
+# Visualization commands (conda: HumanoidDataGeneration)
+#
+# G1 and Booster T1 viewers share the same RobotMotionViewer settings (camera, transparent_robot).
+# G1 playback merges Booster-like floor/sky/light MJCF (ConvertData/assets/booster_like_goalkeeper_scene.xml)
+# with a compiled MJCF snapshot of the runtime URDF (MuJoCo cannot <include> URDF directly).
+# Use --no-booster-scene on visualize_g1_pt_mujoco.py for robot-only preview (older behavior).
+
+# --- Option A: one launcher (forwards to the scripts below) ---
+# python /home/isaak/BEP/ConvertData/visualize_goalkeeper_motion.py --robot g1  [args...]
+# python /home/isaak/BEP/ConvertData/visualize_goalkeeper_motion.py --robot t1  [args...]
+
+# --- Option B: call each script directly ---
+
+# Unitree G1 — leftjump.pt (goalkeeper motion)
+conda activate HumanoidDataGeneration
+
+python /home/isaak/BEP/ConvertData/visualize_g1_pt_mujoco.py \
+  --motion-pt /home/isaak/BEP/ConvertData/export/motion_dataset/lefthand.pt \
+  --joint-id /home/isaak/BEP/ConvertData/export/motion_dataset/joint_id.txt \
+  --g1-urdf /home/isaak/BEP/ConvertData/export/unitreeg1/urdf/g1_23.urdf \
+  --fps 30 \
+  --quat-order xyzw \
+  --allow-missing-meshes
+
+# Booster T1 — converted left jump (from G1 dataset)
+python /home/isaak/BEP/ConvertData/visualize_t1_goalkeeper_pt.py \
+  --motion-pt /home/isaak/BEP/ConvertData/datasets/t1_from_g1_goalkeeper/motions/leftjump.pt
+
+./scripts/pipeline_g1_pt_to_t1.sh --pt ConvertData/export/unitreeg1/goalkeeper_motion_dataset/lefthand.pt --fps 30 
+
+
+# SMPL-X body GIF — lefthand.pt (same style as soma_mosh39/smplx_body_animation.gif)
+conda activate soma
+python /home/isaak/BEP/src/pipeline/g1_smplx_to_mesh_pkl.py --input=/home/isaak/BEP/output/g1_lefthand/smplx_body_mesh_all_frames.pkl --output=/home/isaak/BEP/output/g1_lefthand/smplx_body_mesh_vertices.pkl
+python /home/isaak/BEP/src/pipeline/create_smplx_gif.py --mesh=/home/isaak/BEP/output/g1_lefthand/smplx_body_mesh_vertices.pkl --out=/home/isaak/BEP/output/g1_lefthand/smplx_body_animation.gif
+
+
+conda activate soma                                              
+python src/pipeline/create_smplx_gif.py --mesh output/g1_lefthand/smplx_body_mesh_vertices.pkl --out  output/g1_lefthand/smplx_body_animation.gif 
+
+
+-------
+
+# === NEW PIPELINE: G1 .pt → MoSh++ (marker positions) → SMPL-X → Booster T1 ===
+# Replaces pipeline_g1_pt_to_t1.sh (which used broken analytical coordinate mapping)
+
+# Step 1 — G1 link positions → SMPL-X via MoSh++ (~5–15 min CPU)
+conda activate soma && python src/pipeline/g1_pt_to_mosh.py \
+    --pt ConvertData/export/unitreeg1/goalkeeper_motion_dataset/lefthand.pt \
+    --output-dir output/g1_lefthand
+# Add --force to re-run MoSh if output already exists
+
+# Step 1b — SMPL-X → mesh vertices + body animation GIF
+python src/pipeline/g1_smplx_to_mesh_pkl.py \
+    --input  output/g1_lefthand/smplx_body_mesh_all_frames.pkl \
+    --output output/g1_lefthand/smplx_body_mesh_vertices.pkl
+
+conda activate soma
+python src/pipeline/create_smplx_gif.py \
+    --mesh output/g1_lefthand/smplx_body_mesh_vertices.pkl \
+    --out  output/g1_lefthand/smplx_body_animation.gif
+
+# Step 2 — SMPL-X → Booster T1 retargeting
+conda activate HumanoidDataGeneration && \
+export PYTHONPATH="$PWD/src/retargeting:${PYTHONPATH:-}" && \
+python src/retargeting/scripts/mosh_to_robot.py \
+    --smplx_mesh_pkl output/g1_lefthand/smplx_body_mesh_all_frames.pkl \
+    --robot booster_t1 \
+    --mocap_fps 30 \
+    --tgt_fps 30 \
+    --no_viewer \
+    --save_path output/g1_lefthand/retargeting/lefthand_booster.pkl
+
+# Visualize result
+./scripts/visualize.sh output/g1_lefthand/retargeting/lefthand_booster.pkl

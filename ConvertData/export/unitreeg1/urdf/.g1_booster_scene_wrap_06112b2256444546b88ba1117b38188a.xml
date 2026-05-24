@@ -1,0 +1,6 @@
+<?xml version='1.0'?>
+<mujoco model="g1_goalkeeper_view">
+  <compiler angle="radian" meshdir="../meshes" autolimits="true" strippath="false"/>
+  <include file="/home/isaak/BEP/ConvertData/export/unitreeg1/urdf/.g1_compiled_1917d7ff7ddc49029984c4b280137dcb.xml"/>
+  <include file="/home/isaak/BEP/ConvertData/assets/booster_like_goalkeeper_scene.xml"/>
+</mujoco>

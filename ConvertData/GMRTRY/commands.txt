@@ -1,0 +1,23 @@
+# GMR-based G1 → Booster T1 conversion commands
+# Conda env: gmr
+# Script: /home/isaak/BEP/ConvertData/GMRTRY/g1_to_t1_gmr.py
+# Output:  /home/isaak/BEP/ConvertData/GMRTRY/output/
+
+conda activate gmr
+cd /home/isaak/BEP/ConvertData/GMRTRY
+
+# --- Convert single file ---
+python g1_to_t1_gmr.py \
+  --input  ../export/motion_dataset/lefthand.pt \
+  --output output/lefthand_t1.pkl \
+  --robot  booster_t1 \
+  --fps    30
+
+# --- Convert all 6 motions (booster_t1, 23 DOF) ---
+python g1_to_t1_gmr.py --all
+
+# --- Convert all 6 motions (booster_t1_29dof, 29 DOF) ---
+python g1_to_t1_gmr.py --all --robot booster_t1_29dof
+
+# --- Visualize a converted motion ---
+cd /home/isaak/BEP && ./scripts/visualize.sh ConvertData/GMRTRY/output/lefthand_booster_t1.pkl

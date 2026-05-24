@@ -1,0 +1,125 @@
+{
+    "robot_root_name": "Waist",
+    "human_root_name": "pelvis",
+    "ground_height": 0.0,
+    "human_height_assumption": 1.8,
+    "use_ik_match_table1": true,
+    "use_ik_match_table2": true,
+
+    "human_scale_table": {
+        "pelvis":          0.737,
+        "spine3":          0.737,
+        "left_hip":        0.737,
+        "right_hip":       0.737,
+        "left_knee":       0.737,
+        "right_knee":      0.737,
+        "left_foot":       0.737,
+        "right_foot":      0.737,
+        "left_shoulder":   0.95,
+        "right_shoulder":  0.95,
+        "left_elbow":      0.79,
+        "right_elbow":     0.79
+    },
+
+    "ik_match_table1": {
+        "Waist": [
+            "pelvis", 100, 10,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "Hip_Yaw_Left": [
+            "left_hip", 0, 10,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "Shank_Left": [
+            "left_knee", 0, 10,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "left_foot_link": [
+            "left_foot", 50, 10,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "Hip_Yaw_Right": [
+            "right_hip", 0, 10,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "Shank_Right": [
+            "right_knee", 0, 10,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "right_foot_link": [
+            "right_foot", 50, 10,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "Trunk": [
+            "spine3", 0, 20,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "AL2": [
+            "left_shoulder", 50, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "left_hand_link": [
+            "left_elbow", 80, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "AR2": [
+            "right_shoulder", 50, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "right_hand_link": [
+            "right_elbow", 80, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ]
+    },
+
+    "ik_match_table2": {
+        "Waist": [
+            "pelvis", 100, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "Hip_Yaw_Left": [
+            "left_hip", 10, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "Shank_Left": [
+            "left_knee", 10, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "left_foot_link": [
+            "left_foot", 50, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "Hip_Yaw_Right": [
+            "right_hip", 10, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "Shank_Right": [
+            "right_knee", 10, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "right_foot_link": [
+            "right_foot", 50, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "Trunk": [
+            "spine3", 5, 10,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "AL2": [
+            "left_shoulder", 40, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "left_hand_link": [
+            "left_elbow", 60, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "AR2": [
+            "right_shoulder", 40, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ],
+        "right_hand_link": [
+            "right_elbow", 60, 5,
+            [0.0, 0.0, 0.0], [1.0, 0.0, 0.0, 0.0]
+        ]
+    }
+}

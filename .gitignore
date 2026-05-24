@@ -1,0 +1,23 @@
+body_models/
+.vscode/
+soma_work/
+output/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+*.c3d
+*.pkl
+*.pt
+*.npz
+*.gif
+*.log
+data/*_filled39.csv
+docs/
+"Untitled Document 1"
+Untitled*
+.claude/
+zusefulstuff.txt
+data/*.csv
+!data/sample_take.csv
+*.mp4
